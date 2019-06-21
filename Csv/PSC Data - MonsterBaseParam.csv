@@ -1,0 +1,13 @@
+Key,Size,StatStrength,StatDexterity,StatEndurance,StatSpeed,StatTechnic,StatResPhys,StatResThermo,StatResChem,StatDodgeChance,,_StatSum,_ResistSum
+grunt_melee_common,Small,10,15,6,10,10,0,0,0,0,,51,0
+grunt_range_common,Small,10,10,4,9,10,0,0,0,0,,43,0
+sergant_common,Small,10,10,7,9,10,0,0,0,0,,46,0
+beast_bear_common,Big,10,10,15,11,10,0,0,0,0,,56,
+beast_boar_common,Small,10,10,10,10,10,0,0,0,0,,50,
+beast_beastmaster_common,Small,10,10,8,10,10,0,0,0,0,,48,
+demo_bomber_common,Big,10,10,10,10,10,0,0,0,0,,,
+demo_support_common,Small,10,10,7,9,10,0,0,0,0,,,
+electro_faradei_common,Big,10,10,13,11,10,0,0,0,0,,,
+electro_nailgunner_common,Small,10,10,5,9,10,0,0,0,0,,,
+electro_priest_common,Small,10,10,7,9,10,0,0,0,0,,,
+Rezack_001,Big,34,10,17,40,50,12,12,12,10,,,

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "posscam-combat-calc",
+  "private_key_id": "bcb686d7ab9393aaf8b65a25201e3d04f7e1490d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1hCj1fQQOENC1\n9ZJHmCwqiDrmbsr9R5XidQs83jCP8eQa+to0GhHhwDgb7fSD//L1tvHqBwN/N51X\n7fCXKrPH4bLm1fFYHoy2sPHQf1jkYmyKoB+8Eh4XQhwf0WCg3uD6ngF2wVgHgILC\naci+Hydgt69O6GiU1cjNYObWjYIvqiz325Uf6Lflb7/pLIDpVDxk03etLuD/xYY8\nWh4ozikk6UA/GxbJ4uikPt25Bf4VdVbMUIGedkRDp2xIoFX/9yTvPhbWFA2wIwjh\niB4MN1ucyPaK4aUxUbsnQGjlnJeIj0PNLlu/r75CdBSv0dUf8iuxhdt2ytbjwgUu\nt9mNNbkHAgMBAAECggEAStKiq6cP79hgoFENLnP86L9lQC21gThsAYBr1Hhmnj+A\n3to+7jE848j/mAu7ulncRgtWpzii6WL8eg18GmQg3akcvOi95qwZJwnDdEW6V9J2\nmaIt0rHJM58txrPhWA7nwIc3ZUOHzPfdbtR6Sly/N7AgFK/axFdnwblLDnAglRKm\ndbRc/1JZ1yVcD6Skqa4evxO1GouXtn7lF75TfDLZ9DzpaJUq2tz+HJ+DVFWSgA1W\nD1LdkNQ7OShwHgNBkfSBxQhhzVPb5loWXTEvxE4u2/wI0eUnJ61W+3K7jPg2BSDS\ne50Q7DEXpXJCdfvpDxQXBzQYrxGjRTD+TwBvzee0yQKBgQD5zDdyJPa+ZMZxZtqc\nfetPwOseBaRUI8hAdqs+4HICyRq0HRfN6NevpGMvTMIgDUhJZnJW9GG45u+VO4B4\nypZwFcm37j3f0CBLC0aX0wS7G31+Ai3N/6CFwmCoUuOPJWlOTBGoFZTqv2/N9MOQ\no8uTUX4ZFJs8Vyr+bx5zNUfI3QKBgQC6Be1wIQ4lWCYMtMiWpSthvGsVF3VNVuPe\n5t1l9CRB9kU7G0UQfsu94Ov9iCUjM9DFmY+x9Y9sB7XPPRR/IGpnOYEKwAVSO7i+\nlTmVaL2L9/AkErlO0s/INgkpzzFaNhJH1F/azH5sPCBCrCyvjo1as3x1wd1Ajh9i\nZwcFwjW5MwKBgQCDK7eZ2ssu42BJQEdfkce1E4rjMvc9r6SCJU57MATubYf2OKi9\nWZ2Y/+uNdPMjPZZN5Nv5yU5fd/UrGhm2VDt3FBne2d3n3zR186/YHdkIH8FgH+jJ\nmYhDdPSorw4LpwuLL+q9pseSFYCyV+sx0rEd5NcgeG+j2eobvWHyAXJ2iQKBgQC2\nal2d2SxP/pLBXv5ci3dxDh1Lv4ct4gjuaiGteq2baW4WOfWN6WjNuCRyp/ETBhqx\nypYYgp6z5xOoN1NEHnt44fDio84UB7BwY1DmbKGDAg0gsqO44g0TXbm6oAzbU661\ndVLR8jn+1S8lckUXmoiO6vcfWo4mYbfw/OrsALhB9QKBgCoj4Oc/rqKrrlSoCeF7\n0VV4d0LUadV7za1vWc2vtY3jQrLvd3CD7JUMM4uqUnOZg9j+5eVBo/KTfUhHtbAh\ng8308pE7YmiCKYmT3PEBcsbZP6ocjvIb3hd65H7pCChSaG2XdkaQVgceUQGzfFlo\nxmvZvFP6xBGNcb1b8xGTDlg7\n-----END PRIVATE KEY-----\n",
+  "client_email": "tapk-668@posscam-combat-calc.iam.gserviceaccount.com",
+  "client_id": "100498594113313862811",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tapk-668%40posscam-combat-calc.iam.gserviceaccount.com"
+}

@@ -1,0 +1,13 @@
+Key,Skill1,Skill2,Skill3,Role
+grunt_melee,gruntmelee_slash,,,SingleDamage
+grunt_range,gruntrange_quickshot,,,SingleDamage
+sergant,sergant_hurry,sergant_shot,,Support
+bear,bear_swipe,,,Defender
+boar,boar_dash,,,SingleDamage
+beastmaster,beastmaster_targeting,beastmaster_shot,,Support
+bomber,demo_bomber_blowup,demo_bomber_coverup,,AoeDamage
+demo_support,demo_support_stim,demo_support_poisongrenade,,Support
+faradei,electro_faradei_staticstrike,electro_faradei_thorfist,,Defender
+nailgunner,electro_nailgunner_shot,electro_nailgunner_overload,,SingleDamage
+priest,electro_priest_electroblessing,electro_priest_holystrike,,Support
+boss_rezak,boss_rezak_slash,boss_rezak_strike,boss_rezak_rally,Boss
