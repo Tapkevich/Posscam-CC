@@ -89,7 +89,7 @@ class MonsterGenerator(object):
             for y in base_params:
                 monster_list.append(Monster(y["Key"], y["MultiStrength"], y["MultiDexterity"], y["MultiEndurance"],
                                             y["MultiSpeed"], y["MultiTechnic"], y["MultiResPhys"], y["MultiResThermo"],
-                                            y["MultiResChem"], y["MultiDodgeChance"], y["Class"], y["Base"]))
+                                            y["MultiResChem"], y["MultiDodgeChance"], y["Base"], y["Class"]))
         for m in monster_list:
             m.monster_class.get_skills(monster_class)
 
@@ -106,6 +106,4 @@ class MonsterStorage(object):
 monster_storage = MonsterStorage()
 monster_storage.get_monsters(MonsterGenerator().create_monsters(monster_keys))
 
-for m in monster_storage.monster_list:
-    m.monster_class.print_skills
-
+print(monster_storage.monster_list[0].monster_class.skillist)
