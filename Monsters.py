@@ -1,28 +1,8 @@
 import csv
 import BaseStats
+import BaseCreature
+import Skills
 import itertools
-
-class SkillEffect(object):
-    def __init__(self):
-        self.key
-        self.targettype = "None"
-        self.targetamount = "None"
-        self.effecttype = "None"
-        self.damagetype = "None"
-        self.hitchance = int()
-        self.critchance = float()
-        self.amountparam = "None"
-        self.amountmulti = float()
-        self.amountbase = 0
-        self.lenghtbase = 0
-        self.lengthmulti
-        self.legthparam
-
-class Skill(object):
-    def __init__(self):
-        self.key
-        self.skilleffects = []
-        self.actioncost
 
 
 class MonsterClass(object):
@@ -36,9 +16,9 @@ class MonsterClass(object):
             class_list = csv.DictReader(source)
             for y in class_list:
                 if self.key == y["Key"]:
-                    self.skillist.append(y["Skill1"])
-                    self.skillist.append(y["Skill2"])
-                    self.skillist.append(y["Skill3"])
+                    self.skillist.append(Skills.Skill(y["Skill1"]))
+                    self.skillist.append(Skills.Skill(y["Skill2"]))
+                    self.skillist.append(Skills.Skill(y["Skill3"]))
                 else:
                     continue
 
@@ -46,27 +26,9 @@ class MonsterClass(object):
         print(self.skillist)
 
 
-class Creature(object):
-    def __init__(self, key):
-        self.key = key
-        # Базовые статы
-        self.strength = float()
-        self.dexterity = float()
-        self.endurance = float()
-        self.speed = float()
-        self.technic= float()
-        self.resphys = float()
-        self.resthermo = float()
-        self.reschem = float()
-        self.dodge = float()
-
-    def get_key(self):
-        print(self.key)
-
-
-class Monster(Creature, object):
+class Monster(BaseCreature.Creature, object):
     def __init__(self, key, class_key, base_key):
-        Creature.__init__(self, key)
+        BaseCreature.Creature.__init__(self, key)
         self.monster_class = MonsterClass(class_key)
         self.basis = base_key
 
@@ -101,38 +63,3 @@ class Monster(Creature, object):
 
     #def get_secondary_stats(self):
 
-class MonsterGenerator(object):
-    def __init__(self):
-        pass
-
-    def create_monsters(self, monster_csv, base_csv):
-        monster_list = []
-        # Создаем по объекту монстра для каждой строки в таблице Monster_final_params.
-        with open(monster_csv, newline='') as monster_source:
-            monsters = csv.DictReader(monster_source, delimiter=',')
-            for y in monsters:
-                monster_list.append(Monster(y["Key"], y["Class"], y["Base"]))
-
-        # Даем мобам скиллы
-        for m in monster_list:
-            m.monster_class.get_skills(BaseStats.monster_class)
-
-        # Даем мобам основные статы.
-        for m in monster_list:
-            m.get_main_stats(monster_csv, base_csv)
-
-        return monster_list
-
-
-class MonsterStorage(object):
-    def __init__(self):
-        self.monster_list = []
-
-    def get_monsters(self, monster_list):
-        self.monster_list = monster_list
-
-
-monster_storage = MonsterStorage()
-monster_storage.get_monsters(MonsterGenerator().create_monsters(BaseStats.monster_keys, BaseStats.monster_base_param))
-
-print(monster_storage.monster_list[1].strength)
