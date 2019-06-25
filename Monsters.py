@@ -2,7 +2,6 @@ import csv
 import BaseStats
 import BaseCreature
 import Skills
-import itertools
 
 
 class MonsterClass(object):
@@ -61,5 +60,7 @@ class Monster(BaseCreature.Creature, object):
             else:
                 continue
 
-    #def get_secondary_stats(self):
+    def get_monster_skills(self):
+        return self.monster_class.skillist
+
 

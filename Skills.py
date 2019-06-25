@@ -22,7 +22,9 @@ class SkillEffect(object):
     def get_skill_effect_params(self):
         skill_effects = csv.DictReader(open(BaseStats.skill_effects))
         for e in skill_effects:
-            if self.key == e["Key"]:
+            if len(e["Key"]) == 0:
+                continue
+            elif self.key == e["Key"]:
                 self.targettype = e["TargetType"]
                 self.targetamount = e["TargetAmount"]
                 self.effecttype = e["TypeEffect"]
@@ -48,10 +50,17 @@ class Skill(object):
         self.action_cost = int()
         skill_list = csv.DictReader(open(BaseStats.skill_list), restval='ignore')
         for s in skill_list:
-            if self.key == s["Key"]:
+            if len(s["Key"]) == 0:
+                continue
+
+            elif self.key == s["Key"]:
                 self.skill_effects.append(SkillEffect(s["EffectMain"]))
                 self.skill_effects.append(SkillEffect(s["EffectSecondary"]))
                 self.action_cost = int(s["ActionCost"])
+
         for c in self.skill_effects:
             c.get_skill_effect_params()
+
+
+
 

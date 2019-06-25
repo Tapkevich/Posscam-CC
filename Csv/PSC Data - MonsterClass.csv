@@ -1,5 +1,5 @@
 Key,Skill1,Skill2,Skill3,Role
-grunt_melee,gruntmelee_slash,,,SingleDamage
+grunt_melee,chemist_base_poisongas,,,SingleDamage
 grunt_range,gruntrange_quickshot,,,SingleDamage
 sergant,sergant_hurry,sergant_shot,,Support
 bear,bear_swipe,,,Defender

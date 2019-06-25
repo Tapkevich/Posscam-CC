@@ -32,11 +32,11 @@ class Creature(object):
         self.reductionphys = 1/(self.resphys * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
         self.reductionthermo = 1/(self.resthermo * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
         self.hitpoints = self.endurance * BaseStats.ConHolder.get_constants().get("EnduranceHpBonus")
-        self.action_mod = (self.strength + self.endurance +self.technic +
+        self.action_mod = (self.strength + self.endurance + self.technic +
                            self.dexterity) / BaseStats.ConHolder.get_constants().get("SkillCdSpeedMod")
 
-        min_action_mod = BaseStats.ConHolder.get_constants().get("CdSpeedInfluenceMin")
-        max_action_mod = BaseStats.ConHolder.get_constants().get("CdSPeedInfluenceMax")
+        min_action_mod = float(BaseStats.ConHolder.get_constants().get("CdSpeedInfluenceMin"))
+        max_action_mod = float(BaseStats.ConHolder.get_constants().get("CdSpeedInfluenceMax"))
         if self.action_mod <= min_action_mod:
             self.action_mod = min_action_mod
         elif self.action_mod >= max_action_mod:

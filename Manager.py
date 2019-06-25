@@ -25,7 +25,6 @@ class MonsterGenerator(object):
         # Даем мобам скиллы
         for m in monster_list:
             m.monster_class.get_skills(BaseStats.monster_class)
-
         # Даем мобам основные статы.
         for m in monster_list:
             m.get_main_stats(monster_csv, base_csv)

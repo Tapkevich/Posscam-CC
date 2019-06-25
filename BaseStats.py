@@ -12,6 +12,7 @@ monster_keys = "Csv/PSC Data - MonsterFinallParam.csv"
 skill_effects = "Csv/PSC Data - SkillEffects.csv"
 skill_list = "Csv/PSC Data - SkillList.csv"
 base_stats = "Csv/PSC Data - BaseStats.csv"
+merc_class = "Csv/PSC Data - CharacterClass.csv"
 
 
 class ConHolder:
