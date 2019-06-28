@@ -8,18 +8,14 @@ class MonsterClass(object):
     def __init__(self, key):
         self.key = key
         self.skillist = []
-
-    # Получаем скиллы для классов мобов
-    def get_skills(self, skill_source):
-        with open(skill_source) as source:
-            class_list = csv.DictReader(source)
-            for y in class_list:
-                if self.key == y["Key"]:
-                    self.skillist.append(Skills.Skill(y["Skill1"]))
-                    self.skillist.append(Skills.Skill(y["Skill2"]))
-                    self.skillist.append(Skills.Skill(y["Skill3"]))
-                else:
-                    continue
+        monster_skill_csv = csv.DictReader(open(BaseStats.MONSTER_CLASS_CSV))
+        for row in monster_skill_csv:
+            if len(row["Key"])== 0:
+                continue
+            elif row["Key"] == self.key:
+                self.skillist.append(Skills.Skill(row["Skill1"]))
+                self.skillist.append(Skills.Skill(row["Skill2"]))
+                self.skillist.append(Skills.Skill(row["Skill3"]))
 
     def print_skills(self):
         print(self.skillist)
@@ -27,12 +23,11 @@ class MonsterClass(object):
 
 class Monster(BaseCreature.Creature, object):
     def __init__(self, key, class_key, base_key):
-        BaseCreature.Creature.__init__(self, key)
+        BaseCreature.Creature.__init__(self)
+        self.key = key
         self.monster_class = MonsterClass(class_key)
         self.basis = base_key
-
-    def get_main_stats(self, multy_source, base_source):
-        stat_multy = csv.DictReader(open(multy_source))
+        stat_multy = csv.DictReader(open(BaseStats.MONSTER_KEYS_CSV))
         for m in stat_multy:
             if self.key == m["Key"]:
                 self.strength = float(m["MultiStrength"])
@@ -46,7 +41,7 @@ class Monster(BaseCreature.Creature, object):
                 self.dodge = float(m["MultiDodgeChance"])
             else:
                 continue
-        base_stat = csv.DictReader(open(base_source))
+        base_stat = csv.DictReader(open(BaseStats.MONSTER_BASE_PARAM_CSV))
         for m in base_stat:
             if self.basis == m["Key"]:
                 self.strength = self.strength * float(m["StatStrength"])

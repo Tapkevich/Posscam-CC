@@ -20,7 +20,7 @@ class SkillEffect(object):
         self.legthparam = str
 
     def get_skill_effect_params(self):
-        skill_effects = csv.DictReader(open(BaseStats.skill_effects))
+        skill_effects = csv.DictReader(open(BaseStats.SKILL_EFFECTS_CSV))
         for e in skill_effects:
             if len(e["Key"]) == 0:
                 continue
@@ -48,7 +48,7 @@ class Skill(object):
         self.key = key
         self.skill_effects = []
         self.action_cost = int()
-        skill_list = csv.DictReader(open(BaseStats.skill_list), restval='ignore')
+        skill_list = csv.DictReader(open(BaseStats.SKILL_LIST_CSV), restval='ignore')
         for s in skill_list:
             if len(s["Key"]) == 0:
                 continue

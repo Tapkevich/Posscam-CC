@@ -2,8 +2,8 @@ import BaseStats
 # Базовый класс персонажа, используется, как для мобов так и для чуваков игрока
 
 class Creature(object):
-    def __init__(self, key):
-        self.key = key
+    def __init__(self):
+        # self.key = key
         # Базовые статы
         self.strength = float()
         self.dexterity = float()

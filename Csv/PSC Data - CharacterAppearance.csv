@@ -1,0 +1,13 @@
+Key,Class,Sex,Rarity,Weight,ChanceStrength,ChanceDexterity,ChanceEndurance,ChanceTechnic,ChanceSpeed,,_chancessum
+apperance_chemist_common,chemist_base,Female,Common,100,0.1,0.15,0.25,0.3,0.2,,1
+apperance_chemist_rare,chemist_base,Female,Rare,100,0.1,0.05,0.25,0.35,0.25,,1
+apperance_nurse_common,nurse_base,Male,Common,100,0.1,0.15,0.15,0.3,0.3,,1
+apperance_nurse_rare,nurse_base,Male,Rare,100,0.1,0.15,0.15,0.3,0.3,,1
+apperance_rifleman_common,rifleman,Female,Common,100,0.05,0.3,0.2,0.35,0.1,,1
+apperance_rifleman_rare,rifleman,Male,Rare,100,0.05,0.3,0.2,0.3,0.15,,1
+apperance_warrior_common,warrior,Male,Common,100,0.25,0.15,0.4,0.1,0.1,,1
+apperance_warrior_rare,warrior,Male,Rare,100,0.25,0.15,0.4,0.1,0.1,,1
+apperance_scout_common,scout,Female,Common,100,0.2,0.25,0.25,0.1,0.2,,1
+apperance_scout_rare,scout,Female,Rare,100,0.2,0.25,0.25,0.1,0.2,,1
+apperance_demolisher_common,demolisher,Male,Common,100,0.3,0.05,0.2,0.3,0.15,,1
+apperance_demolisher_rare,demolisher,Male,Rare,100,0.3,0.05,0.2,0.3,0.15,,1
