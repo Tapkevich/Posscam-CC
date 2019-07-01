@@ -1,5 +1,5 @@
 Key,Size,StatStrength,StatDexterity,StatEndurance,StatSpeed,StatTechnic,StatResPhys,StatResThermo,StatResChem,StatDodgeChance,,_StatSum,_ResistSum
-grunt_melee_common,Small,10,15,6,10,10,0,0,0,0,,51,0
+grunt_melee_common,Small,10,15,6,10,10,0,0,10,20,,51,0
 grunt_range_common,Small,10,10,4,9,10,0,0,2,0,,43,0
 sergant_common,Small,10,10,7,9,10,0,0,0,0,,46,0
 beast_bear_common,Big,10,10,15,11,10,0,0,0,0,,56,

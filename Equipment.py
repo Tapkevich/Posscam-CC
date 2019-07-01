@@ -29,7 +29,6 @@ class EquipmentBase(object):
 
 
 
-
 class EquipmentCommon(EquipmentBase):
     def __init__(self, key, rarity, name="None"):
         EquipmentBase.__init__(self, key, name)

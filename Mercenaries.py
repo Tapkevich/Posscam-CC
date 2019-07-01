@@ -23,6 +23,7 @@ class MercClass(object):
                 self.merc_weapon_type = row["ClassWeapon"]
                 self.merc_talisman_cap = int(row["TalismanAmount"])
 
+
 class MercApperance(object):
     def __init__(self, key):
         self.key = key
@@ -35,8 +36,9 @@ class MercApperance(object):
                 self.chance_strength = float(row["ChanceStrength"])
                 self.chance_dexterity = float(row["ChanceDexterity"])
                 self.chance_endurance = float(row["ChanceEndurance"])
-                self.chacne_technic = float(row["ChanceTechnic"])
+                self.chance_technic = float(row["ChanceTechnic"])
                 self.chance_speed = float(row["ChanceSpeed"])
+
 
 class MercRarity(object):
     def __init__(self, key):
@@ -53,16 +55,63 @@ class MercRarity(object):
                 self.point_per_level = row["PointsPerLevel"]
 
 
-
-class Mercenary(object):
-    def __init__(self, merc_class_key, merc_apper_key, merc_rarity, name = "None"):
+class Mercenary(BaseCreature.Creature):
+    def __init__(self, merc_class_key, merc_apper_key, merc_rarity, name="None", lvl=1):
         BaseCreature.Creature.__init__(self)
         self.id = int()
+        self.level = lvl
         self.name = name
         self.mercenary_class = MercClass(merc_class_key)
         self.rarity = MercRarity(merc_rarity)
         self.apperance = MercApperance(merc_apper_key)
         self.equiped_items = MercenaryEquipment()
+        self.get_merc_base_stats()
+
+    def get_merc_base_stats(self):
+
+        start_points_amount = 0
+        points_per_level = 0
+
+        rarity_coefs = csv.DictReader(open(BaseStats.MERC_RARITY_COEF_CSV))
+        for c in rarity_coefs:
+            if self.rarity == c["CharacterRarity"]:
+                start_points_amount = c["PointsAmount"]
+                points_per_level = c["PointsPerLevel"]
+
+        total_points_amount = start_points_amount + points_per_level*self.level
+
+        self.creature_stats["Strength"] = round(total_points_amount*self.apperance.chance_strength)
+        self.creature_stats["Dexterity"] = round(total_points_amount*self.apperance.chance_dexterity)
+        self.creature_stats["Endurance"] = round(total_points_amount*self.apperance.chance_endurance)
+        self.creature_stats["Speed"] = round(total_points_amount*self.apperance.chance_speed)
+        self.creature_stats["Technic"] = round(total_points_amount * self.apperance.chance_technic)
+        self.creature_stats["ResChem"] = self.mercenary_class.merc_class_chem_res
+        self.creature_stats["ResThermo"] = self.mercenary_class.merc_class_therm_res
+        self.creature_stats["ResPhys"] = self.mercenary_class.merc_class_therm_res
+
+    def set_monster_secondary_stats(self):
+        self.creature_stats["ChemDmgRed"] = 1/(self.creature_stats["ResChem"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
+        self.creature_stats["PhysDmgRed"] = 1/(self.creature_stats["ResPhys"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
+        self.creature_stats["ThermDmgRed"] = 1/(self.creature_stats["ResThermo"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
+
+        self.creature_stats["Health"] = self.creature_stats["Endurance"] * BaseStats.ConHolder.get_constants().get("EnduranceHpBonus")
+
+        self.creature_stats["ActionMod"] = (self.creature_stats["Strength"] + self.creature_stats["Endurance"] +
+                                            self.creature_stats["Technic"] + self.creature_stats["Dexterity"]) / BaseStats.ConHolder.get_constants().get("SkillCdSpeedMod")
+
+        min_action_mod = float(BaseStats.ConHolder.get_constants().get("CdSpeedInfluenceMin"))
+        max_action_mod = float(BaseStats.ConHolder.get_constants().get("CdSpeedInfluenceMax"))
+        if self.creature_stats["ActionMod"] <= min_action_mod:
+            self.creature_stats["ActionMod"] = min_action_mod
+        elif self.creature_stats["ActionMod"] >= max_action_mod:
+            self.creature_stats["ActionMod"] = max_action_mod
+
+        self.creature_stats["CritBonus"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexCritInfluence")
+        self.creature_stats["DodgeChance"] += self.creature_stats["Speed"] * BaseStats.ConHolder.get_constants().get("SpeedDodgeInfluence")
+        self.creature_stats["HitChance"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexHitInfluence")
+
+    def get_total_merc_stats(self):
+        pass
 
 
 class MercenaryEquipment(object):
@@ -89,39 +138,67 @@ class MercenaryEquipment(object):
 
     @staticmethod
     def equip_item(item, merc_name, jewelry_slot=0):
+
         equiped_item_slot = item.slot
-        if equiped_item_slot == "Weapon" and Equipment.EquipmentUtility.check_weapon_type(merc_name, item):
-            merc_name.equiped_items.weapon = item
+
+        if equiped_item_slot == "Weapon":
+            MercenaryEquipment.equip_weapon(item, merc_name)
 
         if equiped_item_slot == "Armor":
-            merc_name.equiped_items.armor = item
+            MercenaryEquipment.equip_armor(item, merc_name)
 
         if equiped_item_slot == "Jewelry":
             for i in merc_name.equiped_items.jewelry:
                 if i is None:
                     continue
                 elif i.type == item.type:
-                    return "Tried to add s.t jewelry"
+                    return "Tried to add same type jewelry"
 
-            merc_name.equiped_items.jewelry[jewelry_slot] = item
+            MercenaryEquipment.equip_jewelry(item, merc_name, jewelry_slot)
 
-    def get_stat_bonus(self):
-        for key, value in self.total_stat_bonus.items():
-            if key in self.pohui:
-                self.pohui[key] += value
+    @staticmethod
+    def equip_armor(item, merc_name):
+
+        if merc_name.equiped_items.armor is not None:
+
+            removed_item = merc_name.equiped_items.armor
+
+            for key, value in merc_name.equiped_items.total_stat_bonus.items():
+                merc_name.equiped_items.total_stat_bonuses[key] -= removed_item.stat_bonuses[key]
+                merc_name.equiped_items.total_stat_bonuses[key] += item.stat_bonuses[key]
+        else:
+            for key, value in merc_name.equiped_items.total_stat_bonus.items():
+                merc_name.equiped_items.total_stat_bonus[key] += item.stat_bonuses[key]
+
+        merc_name.equiped_items.armor = item
+
+    @staticmethod
+    def equip_weapon(item, merc_name):
+            if merc_name.equiped_items.weapon is not None:
+                removed_item = merc_name.equiped_items.weapon
+                for key, value in merc_name.equiped_items.total_stat_bonuses.items():
+                    merc_name.equiped_items.total_stat_bonuses[key] -= removed_item.stat_bonuses[key]
+                    merc_name.equiped_tems.total_stat_bonuses[key] += item.stat_bonuses[key]
             else:
-                self.pohui[key] = value
+                for key, value in merc_name.equiped_items.total_stat_bonuses:
+                    merc_name.equiped_tems.total_stat_bonuses[key] += item.stat_bonuses[key]
 
+            merc_name.equiped_items.weapon = item
 
-        if self.armor is not None:
-            self.total_stat_bonus["Strength"] += self.armor.stat_bonuses["Strength"]
+    @staticmethod
+    def equip_jewelry(item, merc_name, jewelry_slot):
 
-        if self.weapon is not None:
-            self.total_stat_bonus["Strength"] += self.weapon.stat_bonuses["Strength"]
+        if merc_name.equiped_items.jewelry[jewelry_slot] is not None:
+            removed_item = merc_name.equiped_items.jewelry[jewelry_slot]
+            for key, value in merc_name.equiped_items.total_stat_bonus.items():
+                merc_name.equiped_items.total_stat_bonus[key] -= removed_item.stat_bonuses[key]
+                merc_name.equiped_items.total_stat_bonus[key] += item.stat_bonuses[key]
+        else:
+            for key, value in merc_name.equiped_items.total_stat_bonus.items():
+                merc_name.equiped_items.total_stat_bonus[key] += item.stat_bonuses[key]
 
-        for i in self.jewelry:
-            if i is not None:
-                self.total_stat_bonus["Strength"] += i.stat_bonuses["Strength"]
+        merc_name.equiped_items.jewelry[jewelry_slot] = item
+
 
 
 
