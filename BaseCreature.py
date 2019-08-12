@@ -11,7 +11,7 @@ class Creature(object):
             "Technic": 0,
             "Speed": 0,
             "HitChance": 0,
-            "CritBonus": 0,
+            "Crit": 0,
             "DodgeChance": 0,
             "DebuffEfficiency": 0,
             "ResPhys": 0,

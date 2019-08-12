@@ -1,0 +1,8 @@
+Key,Name,Type,Slot,StatBonuses,Rarity
+
+armor_chem_rare,Le name,<class 'str'>,<class 'str'>,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 0, 'DodgeChance': 0, 'DebuffEfficiency': 0, 'ResPhys': 0, 'ResChem': 0, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Rare
+jewelry_gasmask_common,None,<class 'str'>,<class 'str'>,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 0, 'DodgeChance': 0, 'DebuffEfficiency': 0, 'ResPhys': 0, 'ResChem': 0, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Common
+armor_chem_rare,Le name,<class 'str'>,<class 'str'>,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 0, 'DodgeChance': 0, 'DebuffEfficiency': 0, 'ResPhys': 0, 'ResChem': 0, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Rare
+jewelry_gasmask_common,None,<class 'str'>,<class 'str'>,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 0, 'DodgeChance': 0, 'DebuffEfficiency': 0, 'ResPhys': 0, 'ResChem': 0, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Common
+armor_chem_rare,Le name,ChemProtection,Armor,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 0, 'DodgeChance': 0, 'DebuffEfficiency': 9, 'ResPhys': 0, 'ResChem': 15, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Rare
+jewelry_gasmask_common,None,Gasmask,Jewelry,"{'Strength': 0, 'Dexterity': 0, 'Endurance': 0, 'Technic': 0, 'Speed': 0, 'HitChance': 0, 'Crit': 3, 'DodgeChance': 0, 'DebuffEfficiency': 0, 'ResPhys': 0, 'ResChem': 0, 'ResThermo': 0, 'Heal': 0, 'Power': 0}",Common

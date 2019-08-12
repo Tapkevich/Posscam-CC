@@ -5,21 +5,6 @@ import csv
 class SkillEffect(object):
     def __init__(self, key):
         self.key = key
-        self.targettype = str
-        self.targetamount = str
-        self.effecttype = str
-        self.damagetype = str
-        self.hitchance = float()
-        self.critchance = float()
-        self.weaponmulty = float()
-        self.amountparam = str
-        self.amountmulti = float()
-        self.amountbase = int()
-        self.lenght = float()
-        self.lengthmulti = float()
-        self.legthparam = str
-
-    def get_skill_effect_params(self):
         skill_effects = csv.DictReader(open(BaseStats.SKILL_EFFECTS_CSV))
         for e in skill_effects:
             if len(e["Key"]) == 0:
@@ -41,8 +26,6 @@ class SkillEffect(object):
 
 
 
-
-
 class Skill(object):
     def __init__(self, key):
         self.key = key
@@ -57,10 +40,6 @@ class Skill(object):
                 self.skill_effects.append(SkillEffect(s["EffectMain"]))
                 self.skill_effects.append(SkillEffect(s["EffectSecondary"]))
                 self.action_cost = int(s["ActionCost"])
-
-        for c in self.skill_effects:
-            c.get_skill_effect_params()
-
 
 
 

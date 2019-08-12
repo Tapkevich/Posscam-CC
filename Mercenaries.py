@@ -4,6 +4,7 @@ import Equipment
 import Skills
 import csv
 
+
 class MercClass(object):
     def __init__(self, key):
         self.key = key
@@ -16,9 +17,9 @@ class MercClass(object):
                 self.merc_class_skill_list.append(Skills.Skill(row["Skill1"]))
                 self.merc_class_skill_list.append(Skills.Skill(row["Skill2"]))
                 self.merc_class_skill_list.append(Skills.Skill(row["Skill3"]))
-                self.merc_class_phys_res = int(row["AmountResPhys"])
-                self.merc_class_chem_res = int(row["AmountResChem"])
-                self.merc_class_therm_res = int(row["AmountResThermo"])
+                self.merc_class_phys_res = int(row["ResAmountResPhys"])
+                self.merc_class_chem_res = int(row["ResAmountResChem"])
+                self.merc_class_therm_res = int(row["ResAmountResThermo"])
                 self.merc_class_dodge = int(row["AmountDodgeChance"])
                 self.merc_weapon_type = row["ClassWeapon"]
                 self.merc_talisman_cap = int(row["TalismanAmount"])
@@ -51,8 +52,8 @@ class MercRarity(object):
             if len(row["CharacterRarity"]) == 0:
                 continue
             elif self.key == row["CharacterRarity"]:
-                self.start_point_amount = row["PointsAmount"]
-                self.point_per_level = row["PointsPerLevel"]
+                self.start_point_amount = int(row["PointsAmount"])
+                self.point_per_level = float(row["PointsPerLevel"])
 
 
 class Mercenary(BaseCreature.Creature):
@@ -65,19 +66,11 @@ class Mercenary(BaseCreature.Creature):
         self.rarity = MercRarity(merc_rarity)
         self.apperance = MercApperance(merc_apper_key)
         self.equiped_items = MercenaryEquipment()
-        self.get_merc_base_stats()
 
     def get_merc_base_stats(self):
 
-        start_points_amount = 0
-        points_per_level = 0
-
-        rarity_coefs = csv.DictReader(open(BaseStats.MERC_RARITY_COEF_CSV))
-        for c in rarity_coefs:
-            if self.rarity == c["CharacterRarity"]:
-                start_points_amount = c["PointsAmount"]
-                points_per_level = c["PointsPerLevel"]
-
+        start_points_amount = self.rarity.start_point_amount
+        points_per_level = self.rarity.point_per_level
         total_points_amount = start_points_amount + points_per_level*self.level
 
         self.creature_stats["Strength"] = round(total_points_amount*self.apperance.chance_strength)
@@ -89,7 +82,15 @@ class Mercenary(BaseCreature.Creature):
         self.creature_stats["ResThermo"] = self.mercenary_class.merc_class_therm_res
         self.creature_stats["ResPhys"] = self.mercenary_class.merc_class_therm_res
 
-    def set_monster_secondary_stats(self):
+    def get_equiped_merc_stats(self):
+        self.get_merc_base_stats()
+        for key, value in self.creature_stats.items():
+            if key in self.equiped_items.total_stat_bonus and self.creature_stats[key] != 0:
+                self.creature_stats[key] += self.equiped_items.total_stat_bonus[key]
+        self.creature_stats["Power"] += self.equiped_items.total_stat_bonus["Power"]
+        self.get_merc_secondary_stats()
+
+    def get_merc_secondary_stats(self):
         self.creature_stats["ChemDmgRed"] = 1/(self.creature_stats["ResChem"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
         self.creature_stats["PhysDmgRed"] = 1/(self.creature_stats["ResPhys"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
         self.creature_stats["ThermDmgRed"] = 1/(self.creature_stats["ResThermo"] * BaseStats.ConHolder.get_constants().get("ResInfluence") + 1)
@@ -106,12 +107,12 @@ class Mercenary(BaseCreature.Creature):
         elif self.creature_stats["ActionMod"] >= max_action_mod:
             self.creature_stats["ActionMod"] = max_action_mod
 
-        self.creature_stats["CritBonus"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexCritInfluence")
-        self.creature_stats["DodgeChance"] += self.creature_stats["Speed"] * BaseStats.ConHolder.get_constants().get("SpeedDodgeInfluence")
-        self.creature_stats["HitChance"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexHitInfluence")
-
-    def get_total_merc_stats(self):
-        pass
+        self.creature_stats["CritBonus"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexCritInfluence")\
+                                           + self.equiped_items.total_stat_bonus["Crit"]
+        self.creature_stats["DodgeChance"] = self.creature_stats["Speed"] * BaseStats.ConHolder.get_constants().get("SpeedDodgeInfluence") + \
+                                              self.equiped_items.total_stat_bonus["DodgeChance"]
+        self.creature_stats["HitChance"] = self.creature_stats["Dexterity"] * BaseStats.ConHolder.get_constants().get("DexHitInfluence") + \
+                                           self.equiped_items.total_stat_bonus["HitChance"]
 
 
 class MercenaryEquipment(object):

@@ -27,15 +27,12 @@ class EquipmentBase(object):
         }
 
 
-
-
 class EquipmentCommon(EquipmentBase):
     def __init__(self, key, rarity, name="None"):
         EquipmentBase.__init__(self, key, name)
         self.rarity = EquipmentRarity(rarity)
-        self.get_common_equip_stats()
 
-    def get_common_equip_stats(self):
+    def get_common_equip_base_stats(self):
         stat_source = csv.DictReader(open(BaseStats.ITEM_COMMON_BASES_CSV))
         for row in stat_source:
             if row["Key"] == self.key:

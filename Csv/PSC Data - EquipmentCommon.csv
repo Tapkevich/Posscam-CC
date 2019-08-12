@@ -4,7 +4,7 @@ weapon_chemist_rare,Weapon,ChemicalWeapon,60,None,Technic,10,Speed,10,Parts,100
 armor_chem_common,Armor,ChemProtection,0,None,ResChem,3,None,0,Parts,50
 armor_chem_rare,Armor,ChemProtection,0,None,ResChem,5,DebuffEfficiency,3,Parts,100
 jewelry_catalyst_common,Jewelry,Catalyst,0,None,DebuffEfficiency,5,None,0,Parts,50
-jewelry_gasmask_common,Jewelry,Gasmask,0,None,ResChem,3,None,0,Parts,50
+jewelry_gasmask_common,Jewelry,Gasmask,0,None,Crit,3,None,0,Parts,50
 weapon_doctor_common,Weapon,DoctorsWeapon,30,None,Dexterity,5,None,0,Parts,50
 weapon_doctor_rare,Weapon,DoctorsWeapon,40,None,Dexterity,10,Speed,5,Parts,100
 armor_med_common,Armor,DoctorsProtection,0,None,Technic,5,None,0,Parts,50
