@@ -28,9 +28,28 @@ class EquipmentBase(object):
 
 
 class EquipmentCommon(EquipmentBase):
-    def __init__(self, key, rarity, name="None"):
+    def __init__(self, key, rarity, name="None", mod_list=[]):
         EquipmentBase.__init__(self, key, name)
         self.rarity = EquipmentRarity(rarity)
+        self.mod_list = mod_list
+        self.rand_amount = 0
+
+        self.get_common_equip_base_stats()
+        self.get_total_rand_stats()
+
+    def get_total_rand_stats(self):
+        rand_amount = 0
+        for m in self.mod_list:
+            for key, value in m.bonus_dict.items():
+                if key == "Random":
+                    rand_amount += int(value)
+        self.rand_amount = rand_amount
+
+    def get_mod_bonus_stats(self):
+        for m in self.mod_list:
+            for key, value in m.bonus_dict.items():
+                if key != "Random":
+                    self.stat_bonuses[key] += int(value)
 
     def get_common_equip_base_stats(self):
         stat_source = csv.DictReader(open(BaseStats.ITEM_COMMON_BASES_CSV))

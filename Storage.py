@@ -1,6 +1,7 @@
 import csv
 import BaseStats
 import ast
+import json
 import Equipment as Equip
 import Crafting as Craft
 
@@ -17,12 +18,16 @@ class ItemStorage(object):
 
     @staticmethod
     def save_common_item(item):
-        fieldnames = ['Key', 'Name', 'Type', 'Slot', "StatBonuses", "Rarity"]
+        item_mod_keys = []
+        for mod in item.mod_list:
+            item_mod_keys.append(mod.key)
+
+        fieldnames = ['Key', 'Name', 'Type', 'Slot', "ModList", "Rarity"]
         sniffer = csv.Sniffer()
         csv_dialect = sniffer.sniff(open(BaseStats.MERC_CLASS_CSV).readline())
-        writer = csv.DictWriter(open(BaseStats.COMMON_ITEMS_STORAGE, 'a'), fieldnames=fieldnames, dialect=csv_dialect)
+        writer = csv.DictWriter(open(BaseStats.COMMON_ITEMS_STORAGE, 'a'), fieldnames=fieldnames, dialect=csv_dialect, escapechar='\\')
         writer.writerow({"Key": item.key, "Name": item.name, "Type": item.type, "Slot": item.slot,
-                         "StatBonuses": item.stat_bonuses, "Rarity": item.rarity.key})
+                         "ModList": json.dumps(item_mod_keys), "Rarity": item.rarity.key})
 
     @staticmethod
     def remove_item(item):
@@ -30,10 +35,18 @@ class ItemStorage(object):
 
     @staticmethod
     def load_common_items():
-        common_item_source = csv.DictReader(open(BaseStats.COMMON_ITEMS_STORAGE))
+        common_item_source = csv.DictReader(open(BaseStats.COMMON_ITEMS_STORAGE), escapechar='\\')
         for row in common_item_source:
             new_item = Equip.EquipmentCommon(row["Key"], row["Rarity"], row["Name"])
-            new_item.stat_bonuses = ast.literal_eval(row["StatBonuses"])
+
+            new_item.mod_list = []
+            mod_list_keys = json.loads(row["ModList"])
+            for m in mod_list_keys:
+                for key, value in item_storage.mod_dict.items():
+                    if key == m:
+                        new_item.mod_list.append(value)
+            new_item.get_total_rand_stats()
+
             new_item.type = row["Type"]
             new_item.slot = row["Slot"]
             item_storage.item_dict[row["Name"]] = new_item
@@ -54,15 +67,17 @@ class ItemStorage(object):
             item_storage.item_dict[row["Key"]] = new_item
 
     @staticmethod
-    def load_mods(self):
+    def load_mods():
         mods_source = csv.DictReader(open(BaseStats.CRAFT_MODS_BONUSES))
         for row in mods_source:
             new_mod = Craft.CraftMod(row["Key"])
             # print(new_mod.bonus_dict)
-            self.mod_dict[row["Key"]] = new_mod
+            item_storage.mod_dict[row["Key"]] = new_mod
 
 
 
 
 item_storage = ItemStorage()
+item_storage.load_mods()
 item_storage.load_common_items()
+
