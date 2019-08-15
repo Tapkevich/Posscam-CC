@@ -88,6 +88,7 @@ class EquipmentUnique(EquipmentBase):
                 self.type = row["Type"]
                 self.slot = row["Slot"]
 
+
 class EquipmentUtility:
     @staticmethod
     def check_weapon_type(merc, weapon):

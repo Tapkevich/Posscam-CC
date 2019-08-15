@@ -1,96 +1,80 @@
 import wx
-import sys
-import random
-import Equipment
-import csv
-import BaseStats
-import Mercenaries
-import Monsters
-import Manager
 
-# def main():
-    # merc_storage = Manager.MercenaryStorage()
-    # item_storage = Manager.ItemStorage()
-    # test_equip = Equipment.EquipmentCommon("armor_chem_rare", "Rare", "Le name")
-    # test_equip_2 = Equipment.EquipmentCommon("jewelry_gasmask_common", "Common")
-    # # print(test_equip.stat_bonuses["ResChem"])
-    # # print(test_equip.name)
-    # # print(test_equip.key)
-    #
-    # test_merc = Mercenaries.Mercenary("chemist_base", "apperance_chemist_common", "Common", "Test subject", 20)
-    # Mercenaries.MercenaryEquipment.equip_item(test_equip, test_merc)
-    # Mercenaries.MercenaryEquipment.equip_item(test_equip_2, test_merc, 1)
-    #
-    # item_storage.load_common_items()
-    # item_storage.load_unique_items()
-    #
-    # for key, item in item_storage.item_dict.items():
-    #     if isinstance(item, Equipment.EquipmentCommon):
-    #         item.get_common_equip_base_stats()
-    #         print(item.key)
-    #         print(item.stat_bonuses)
-    #     elif isinstance(item, Equipment.EquipmentUnique):
-    #         print(item.key)
-    #         print(item.stat_bonuses)
-    # item_storage.load_mods()
-    # for key, mod in item_storage.mod_dict.items():
-    #     print(mod.bonus_dict)
+class Example(wx.Frame):
 
-    #
-    # print(test_merc.equiped_items.armor.stat_bonuses)
-    # for i in test_merc.equiped_items.jewelry:
-    #     if i is not None:
-    #         print(i.stat_bonuses)
-    #
-    # # print(test_merc.equiped_items.total_stat_bonus)
-    # test_merc.get_equiped_merc_stats()
-    # print(test_merc.creature_stats)
-    # print(test_merc.rarity)
+    def __init__(self, parent, title):
+        super(Example, self).__init__(parent, title=title)
 
-    # merc_storage.get_available_merc_base_classes()
-    # #
-    # for t in merc_storage.merc_class_trees:
-    #     print(t.show())
+        self.InitUI()
+        self.Centre()
 
+    def InitUI(self):
 
-    # test_monster = Monsters.Monster("grunt_melee_1", "grunt_melee", "grunt_melee_common")
-    # print(test_monster.creature_stats)
+        panel = wx.Panel(self)
 
-#
+        font = wx.SystemSettings.GetFont(wx.SYS_SYSTEM_FONT)
+
+        font.SetPointSize(9)
+
+        vbox = wx.BoxSizer(wx.VERTICAL)
+
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        st1 = wx.StaticText(panel, label='Class Name')
+        st1.SetFont(font)
+        hbox1.Add(st1, flag=wx.RIGHT, border=8)
+        tc = wx.TextCtrl(panel)
+        hbox1.Add(tc, proportion=1)
+        vbox.Add(hbox1, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP, border=10)
+
+        vbox.Add((-1, 10))
+
+        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
+        st2 = wx.StaticText(panel, label='Matching Classes')
+        st2.SetFont(font)
+        hbox2.Add(st2)
+        vbox.Add(hbox2, flag=wx.LEFT | wx.TOP, border=10)
+
+        vbox.Add((-1, 10))
+
+        hbox3 = wx.BoxSizer(wx.HORIZONTAL)
+        tc2 = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        hbox3.Add(tc2, proportion=1, flag=wx.EXPAND)
+        vbox.Add(hbox3, proportion=1, flag=wx.LEFT|wx.RIGHT|wx.EXPAND,
+            border=10)
+
+        vbox.Add((-1, 25))
+
+        hbox4 = wx.BoxSizer(wx.HORIZONTAL)
+        cb1 = wx.CheckBox(panel, label='Case Sensitive')
+        cb1.SetFont(font)
+        hbox4.Add(cb1)
+        cb2 = wx.CheckBox(panel, label='Nested Classes')
+        cb2.SetFont(font)
+        hbox4.Add(cb2, flag=wx.LEFT, border=10)
+        cb3 = wx.CheckBox(panel, label='Non-Project classes')
+        cb3.SetFont(font)
+        hbox4.Add(cb3, flag=wx.LEFT, border=10)
+        vbox.Add(hbox4, flag=wx.LEFT, border=10)
+
+        vbox.Add((-1, 25))
+
+        hbox5 = wx.BoxSizer(wx.HORIZONTAL)
+        btn1 = wx.Button(panel, label='Ok', size=(70, 30))
+        hbox5.Add(btn1)
+        btn2 = wx.Button(panel, label='Close', size=(70, 30))
+        hbox5.Add(btn2, flag=wx.LEFT|wx.BOTTOM, border=5)
+        vbox.Add(hbox5, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+
+        panel.SetSizer(vbox)
+
 
 def main():
 
-    players = [('Tendulkar', '15000', '100'), ('Dravid', '14000', '1'),
-               ('Kumble', '1000', '700'), ('KapilDev', '5000', '400'),
-               ('Ganguly', '8000', '50')]
+    app = wx.App()
+    ex = Example(None, title='Go To Class')
+    ex.Show()
+    app.MainLoop()
 
-    class Mywin(wx.Frame):
 
-        def __init__(self, parent, title):
-            super(Mywin, self).__init__(parent, title=title)
-
-            panel = wx.Panel(self)
-            box = wx.BoxSizer(wx.HORIZONTAL)
-
-            self.list = wx.ListCtrl(panel, -1, style=wx.LC_REPORT)
-            self.list.InsertColumn(0, 'name', width=100)
-            self.list.InsertColumn(1, 'runs', wx.LIST_FORMAT_RIGHT, 100)
-            self.list.InsertColumn(2, 'wkts', wx.LIST_FORMAT_RIGHT, 100)
-
-            for i in players:
-                index = self.list.InsertStringItem(sys.maxsize, i[0])
-                self.list.SetStringItem(index, 1, i[1])
-                self.list.SetStringItem(index, 2, i[2])
-
-            box.Add(self.list, 1, wx.EXPAND)
-            panel.SetSizer(box)
-            panel.Fit()
-            self.Centre()
-
-            self.Show(True)
-
-    ex = wx.App()
-    Mywin(None, 'ListCtrl Demo')
-    ex.MainLoop()
-
-main()
+if __name__ == '__main__':
+    main()
