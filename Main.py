@@ -12,9 +12,10 @@ import random
 def main():
 
 
-    # for mods in new_item.mod_list:
-    #     print(mods.bonus_dict)
-
+    # item_mods = [Crafting.CraftMod('mod_random_epic'), Crafting.CraftMod('mod_technic_rare')]
+    # new_item = Equipment.EquipmentCommon("weapon_chemist_rare", "Uncommon", name="Test", mod_list=item_mods)
+    # for m in new_item.mod_list:
+    #     print(m.bonus_dict)
     # Storage.ItemStorage.save_common_item(new_item)
 
 
@@ -23,11 +24,11 @@ def main():
     #         print(m.bonus_dict)
 
 
-    for key, value in Storage.item_storage.item_dict.items():
-        print(value.stat_bonuses)
-        value.get_mod_bonus_stats()
-        print(value.stat_bonuses)
-        print(value.rand_amount)
+    # for key, value in Storage.item_storage.item_dict.items():
+    #     print(value.stat_bonuses)
+    #     value.get_mod_bonus_stats()
+    #     print(value.stat_bonuses)
+    #     print(value.rand_amount)
 
     app = wx.App()
     main_menu = Interface.FirstLayer(None)

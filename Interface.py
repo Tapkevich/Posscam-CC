@@ -5,6 +5,7 @@ import Equipment
 import random
 import Storage
 import BaseStats
+import Crafting
 APP_EXIT = 1
 
 class MiscFunctions():
@@ -126,48 +127,95 @@ class ItemInfo(wx.Frame):
     def __init__(self, parent, item, *args):
         super(ItemInfo, self).__init__(parent)
         self.Centre()
-        self.Size = wx.Size(500, 200)
+        self.Size = wx.Size(500, 600)
 
         current_item = self.find_current_item(item)
         common_item_types = Storage.ItemStorage.get_common_item_keys()
 
-        self.main_sizer = wx.BoxSizer(wx.VERTICAL)
+        mod_list = []
+        mod_list.append("None")
+        for key, value in Storage.item_storage.mod_dict.items():
+            mod_list.append(key)
 
-
-        #################################################
-        self.top_label = wx.StaticText(self, label="Main parameters")
-
-        self.required_stats_sizer = wx.BoxSizer(wx.HORIZONTAL)
-
-
+        ##================================ Верхний блок ==========================
 
         self.name_sizer = wx.BoxSizer(wx.VERTICAL)
         self.item_name = wx.StaticText(self, label="Name")
         self.item_type = wx.TextCtrl(self, wx.ID_ANY, item, wx.DefaultPosition)
-        self.name_sizer.Add(self.item_name, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
+        self.name_sizer.Add(self.item_name, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM)
         self.name_sizer.Add(self.item_type, wx.ID_ANY, wx.EXPAND)
 
         self.item_key_sizer = wx.BoxSizer(wx.VERTICAL)
         self.item_key_label = wx.StaticText(self, label="Item key")
         self.item_key_combobox = wx.ComboBox(self, value=current_item.key, choices=common_item_types)
-        self.item_key_sizer.Add(self.item_key_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
+        self.item_key_sizer.Add(self.item_key_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM)
         self.item_key_sizer.Add(self.item_key_combobox, wx.ID_ANY, wx.EXPAND)
 
         self.item_rarity_sizer = wx.BoxSizer(wx.VERTICAL)
         self.item_rarity_label = wx.StaticText(self, label="Item rarity")
         self.item_rarity_value = wx.ComboBox(self, value=current_item.rarity.key, choices=BaseStats.RARITY_LIST)
-        self.item_rarity_sizer.Add(self.item_rarity_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
+        self.item_rarity_sizer.Add(self.item_rarity_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM)
         self.item_rarity_sizer.Add(self.item_rarity_value, wx.ID_ANY, wx.EXPAND)
 
+        self.required_stats_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.required_stats_sizer.Add(self.name_sizer, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 20)
         self.required_stats_sizer.Add(self.item_key_sizer, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 20)
         self.required_stats_sizer.Add(self.item_rarity_sizer, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 20)
 
+        self.top_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        self.top_label = wx.StaticText(self, label="Main parameters")
+        self.top_sizer.Add(self.top_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 30)
+        self.top_sizer.Add(self.required_stats_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 30)
+
+        ##==================Список модов в предмете и контролы для их смены===========
+        self.mod_section = wx.BoxSizer(wx.VERTICAL)
+        self.item_mods = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.mod_list_label = wx.StaticText(self, label="Item mods")
+        self.mod1_combobox = wx.ComboBox(self, value=current_item.mod_list[0].key, choices=mod_list)
+        self.mod2_combobox = wx.ComboBox(self, value=current_item.mod_list[1].key, choices=mod_list)
+        self.mod3_combobox = wx.ComboBox(self, value=current_item.mod_list[2].key, choices=mod_list)
+
+        self.item_mods.Add(self.mod1_combobox, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 50)
+        self.item_mods.Add(self.mod2_combobox, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 50)
+        self.item_mods.Add(self.mod3_combobox, wx.ID_ANY, wx.EXPAND, wx.LEFT|wx.RIGHT, 50)
+
+        self.mod_section.Add(self.mod_list_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
+        self.mod_section.Add(self.item_mods, wx.ID_ANY, wx.EXPAND)
+
+        ## ============================== Статы предмета ============================
+
+        self.stat_grid_sizer = wx.GridSizer(cols=2, hgap=30, vgap=20)
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Strength: {current_item.stat_bonuses['Strength']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Dexterity: {current_item.stat_bonuses['Dexterity']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Endurance: {current_item.stat_bonuses['Endurance']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Technic: {current_item.stat_bonuses['Technic']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Speed: {current_item.stat_bonuses['Speed']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"HitChance: {current_item.stat_bonuses['HitChance']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Crit: {current_item.stat_bonuses['Crit']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"DodgeChance: {current_item.stat_bonuses['DodgeChance']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"DebuffEfficiency: {current_item.stat_bonuses['DebuffEfficiency']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"ResPhys: {current_item.stat_bonuses['ResPhys']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"ResChem: {current_item.stat_bonuses['ResChem']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"ResThermo: {current_item.stat_bonuses['ResThermo']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Heal: {current_item.stat_bonuses['Heal']}"))
+        self.stat_grid_sizer.Add(wx.StaticText(self, label=f"Power: {current_item.stat_bonuses['Power']}"))
 
 
 
-        self.main_sizer.Add(self.top_label, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL,  wx.CENTER | wx.BOTTOM, 5)
-        self.main_sizer.Add(self.required_stats_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 40)
+
+        self.stat_label = wx.StaticText(self, label="Item stats")
+
+        self.stat_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.stat_sizer.Add(self.stat_label, wx.ID_ANY, wx.ALIGN_CENTER, wx.BOTTOM, 20)
+        self.stat_sizer.Add(self.stat_grid_sizer, wx.ID_ANY, wx.EXPAND, 20)
+
+        ##=============================== Главный сайзер================================
+        self.main_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.main_sizer.Add(self.top_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
+        self.main_sizer.Add(self.mod_section, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
+        self.main_sizer.Add(self.stat_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
 
         # self.main_sizer.SetSizeHints(self)
         self.SetSizer(self.main_sizer)
@@ -175,8 +223,11 @@ class ItemInfo(wx.Frame):
     def find_current_item(self, item):
         common_item_types = Storage.ItemStorage.get_common_item_keys()
 
+        temp_modlist = [Crafting.CraftMod("None"), Crafting.CraftMod("None"), Crafting.CraftMod("None")]
+
         if item == "Item name":
-            current_item = Equipment.EquipmentCommon(random.choice(common_item_types), "Common", "Item name")
+            current_item = Equipment.EquipmentCommon(random.choice(common_item_types), "Common",
+                                                     "Item name", temp_modlist)
         else:
             current_item = Storage.item_storage.item_dict[item]
             print(current_item.stat_bonuses)

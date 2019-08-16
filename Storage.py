@@ -21,6 +21,8 @@ class ItemStorage(object):
         item_mod_keys = []
         for mod in item.mod_list:
             item_mod_keys.append(mod.key)
+        while len(item_mod_keys) < 3:
+            item_mod_keys.append("None")
 
         fieldnames = ['Key', 'Name', 'Type', 'Slot', "ModList", "Rarity"]
         sniffer = csv.Sniffer()
@@ -37,15 +39,23 @@ class ItemStorage(object):
     def load_common_items():
         common_item_source = csv.DictReader(open(BaseStats.COMMON_ITEMS_STORAGE), escapechar='\\')
         for row in common_item_source:
-            new_item = Equip.EquipmentCommon(row["Key"], row["Rarity"], row["Name"])
+            if row["Key"] in item_storage.item_dict.keys():
+                print(f"There are duplicate {row['Key']}")
+                continue
+            else:
+                new_item = Equip.EquipmentCommon(row["Key"], row["Rarity"], row["Name"])
 
-            new_item.mod_list = []
-            mod_list_keys = json.loads(row["ModList"])
-            for m in mod_list_keys:
-                for key, value in item_storage.mod_dict.items():
-                    if key == m:
-                        new_item.mod_list.append(value)
-            new_item.get_total_rand_stats()
+                new_item.mod_list = []
+                mod_list_keys = json.loads(row["ModList"])
+                for m in mod_list_keys:
+                    if m == "None":
+                        new_item.mod_list.append(Craft.CraftMod("None"))
+                    for key, value in item_storage.mod_dict.items():
+                        if key == m:
+                            new_item.mod_list.append(value)
+                new_item.get_total_rand_stats()
+                new_item.get_mod_bonus_stats()
+
 
             new_item.type = row["Type"]
             new_item.slot = row["Slot"]
