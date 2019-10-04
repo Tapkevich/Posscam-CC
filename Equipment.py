@@ -33,9 +33,8 @@ class EquipmentCommon(EquipmentBase):
         self.rarity = EquipmentRarity(rarity)
         self.mod_list = mod_list
         self.rand_amount = 0
-
         self.get_common_equip_base_stats()
-        self.get_total_rand_stats()
+        self.get_mod_bonus_stats()
 
     def get_total_rand_stats(self):
         rand_amount = 0
@@ -50,6 +49,8 @@ class EquipmentCommon(EquipmentBase):
             for key, value in m.bonus_dict.items():
                 if key != "Random":
                     self.stat_bonuses[key] += int(value)
+
+        self.get_total_rand_stats()
 
     def get_common_equip_base_stats(self):
         stat_source = csv.DictReader(open(BaseStats.ITEM_COMMON_BASES_CSV))

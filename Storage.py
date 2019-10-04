@@ -44,7 +44,6 @@ class ItemStorage(object):
                 continue
             else:
                 new_item = Equip.EquipmentCommon(row["Key"], row["Rarity"], row["Name"])
-
                 new_item.mod_list = []
                 mod_list_keys = json.loads(row["ModList"])
                 for m in mod_list_keys:
