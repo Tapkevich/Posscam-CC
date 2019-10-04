@@ -218,7 +218,6 @@ class ItemInfo(wx.Frame):
 
         stat_grid_sizer = wx.GridSizer(cols=2, hgap=30, vgap=20)
 
-
         self.str_amount_txt = wx.StaticText(self, label="Didn't get stats")
         self.str_amount_txt.SetFont(stat_font)
         stat_grid_sizer.Add(self.str_amount_txt)
@@ -269,6 +268,26 @@ class ItemInfo(wx.Frame):
         self.stat_sizer.Add(stat_label, wx.ID_ANY, wx.ALIGN_CENTER, wx.BOTTOM, 20)
         self.stat_sizer.Add(stat_grid_sizer, wx.ID_ANY, wx.EXPAND, 20)
 
+        ## =============================== Управление рандомными статами ========================= ##
+
+        strength_check = wx.CheckBox(self, label="Strength")
+        strength_check.SetFont(stat_font)
+        dexterity_check = wx.CheckBox(self, label="Dexterity")
+        endurance_check = wx.CheckBox(self, label="Endurance")
+        technic_check = wx.CheckBox(self, label="Technic")
+        speed_check = wx.CheckBox(self, label="Speed")
+
+        checkbox_sizer = wx.GridSizer(cols=3, hgap=10, vgap=10)
+        checkbox_sizer.Add(strength_check)
+        checkbox_sizer.Add(dexterity_check)
+        checkbox_sizer.Add(endurance_check)
+        checkbox_sizer.Add(technic_check)
+        checkbox_sizer.Add(speed_check)
+
+        rand_sizer = wx.BoxSizer(wx.VERTICAL)
+        rand_sizer.Add(checkbox_sizer, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL)
+
+
         ## =============================== Кнопки управления =================================
 
         test_button = wx.Button(self, label="Test")
@@ -277,16 +296,13 @@ class ItemInfo(wx.Frame):
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         button_sizer.Add(test_button, wx.ID_ANY, wx.ALIGN_CENTER)
 
-        ## =============================== Управление рандомными статами ========================= ##
-
-        
-
 
         ##=============================== Главный сайзер================================
         self.main_sizer = wx.BoxSizer(wx.VERTICAL)
-        self.main_sizer.Add(self.top_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
+        self.main_sizer.Add(self.top_sizer, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
         self.main_sizer.Add(self.mod_section, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
         self.main_sizer.Add(self.stat_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
+        self.main_sizer.Add(rand_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
         self.main_sizer.Add(button_sizer, wx.ID_ANY, wx.EXPAND)
 
         # self.main_sizer.SetSizeHints(self)

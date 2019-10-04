@@ -52,8 +52,7 @@ class ItemStorage(object):
                     for key, value in item_storage.mod_dict.items():
                         if key == m:
                             new_item.mod_list.append(value)
-                new_item.get_total_rand_stats()
-                new_item.get_mod_bonus_stats()
+                new_item.get_nonunique_item_stats()
 
 
             new_item.type = row["Type"]
