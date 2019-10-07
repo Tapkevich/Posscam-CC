@@ -131,12 +131,15 @@ class ItemInfo(wx.Frame):
         self.current_item = self.find_current_item(item)
         common_item_types = Storage.ItemStorage.get_common_item_keys()
 
-        self.Bind(wx.EVT_SHOW, self.show_current_item_stats)
+        # self.Bind(wx.EVT_SHOW, self.show_current_item_stats)
 
         mod_list = []
         mod_list.append("None")
         for key, value in Storage.item_storage.mod_dict.items():
             mod_list.append(key)
+
+        # Главная панель
+        main_panel = wx.Panel(self)
 
         ##============================= Шрифты ===============================##
 
@@ -146,22 +149,101 @@ class ItemInfo(wx.Frame):
 
         ##================================ Верхний блок ==========================
 
+        top_panel = wx.Panel(main_panel, pos=(10, 10))
+        top_panel.SetSize(470, 70)
+        top_panel.SetBackgroundColour('#1271e6')
+        top_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
 
-    # def update_new_item_stats(self, e):
-    #     temp_mod_list = []
-    #     for mod in self.mod_boxes:
-    #         name = mod.GetValue()
-    #         new_mod = Crafting.CraftMod(name)
-    #         temp_mod_list.append(new_mod)
-    #
-    #     temp_item_name = self.current_item.name
-    #     temp_type = self.item_key_combobox.GetValue()
-    #     temp_rarity = self.item_rarity_value.GetValue()
-    #
-    #     new_item = Equipment.EquipmentCommon(temp_type, temp_rarity, name=temp_item_name, mod_list=temp_mod_list)
-    #     self.current_item = new_item
-    #     self.show_current_item_stats(e)
+        #Создаем коробку с именем предмета
+        item_name_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        item_name_label = wx.StaticText(top_panel, label="Current item name")
+        item_name_label.SetFont(sublabel_font)
+        item_name_ctrl = wx.TextCtrl(top_panel, value=self.current_item.name)
+
+        item_name_sizer.AddSpacer(5)
+        item_name_sizer.Add(item_name_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        item_name_sizer.AddSpacer(5)
+        item_name_sizer.Add(item_name_ctrl, wx.EXPAND)
+        top_sizer.Add(item_name_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
+
+        # Создаем коробку с типом предмета
+        item_key_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        item_key_label = wx.StaticText(top_panel, label="Item key")
+        item_key_label.SetFont(sublabel_font)
+        item_key_cbox = wx.ComboBox(top_panel, value=self.current_item.key, choices=common_item_types)
+
+        item_key_sizer.AddSpacer(5)
+        item_key_sizer.Add(item_key_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        item_key_sizer.AddSpacer(5)
+        item_key_sizer.Add(item_key_cbox, wx.EXPAND)
+        top_sizer.Add(item_key_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
+
+        # Создаем коробку с редкостью предмета
+        item_rarity_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        item_rarity_label = wx.StaticText(top_panel, label="Item rarity")
+        item_rarity_label.SetFont(sublabel_font)
+        item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=[])
+
+        item_rarity_sizer.AddSpacer(5)
+        item_rarity_sizer.Add(item_rarity_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        item_rarity_sizer.AddSpacer(5)
+        item_rarity_sizer.Add(item_rarity_cbox, wx.EXPAND)
+        top_sizer.Add(item_rarity_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
+
+
+        top_panel.SetSizer(top_sizer)
+        top_panel.Layout()
+
+
+
+
+
+    def find_current_item(self, item):
+        common_item_types = Storage.ItemStorage.get_common_item_keys()
+        temp_modlist = [Crafting.CraftMod("None"), Crafting.CraftMod("None"), Crafting.CraftMod("None")]
+
+        if item == "Item name":
+            current_item = Equipment.EquipmentCommon(random.choice(common_item_types), "Common",
+                                                     "Item name", temp_modlist)
+        else:
+            current_item = Storage.item_storage.item_dict[item]
+            print(current_item.stat_bonuses)
+        return current_item
+
+    def show_current_item_stats(self, e):
+        self.str_amount_txt.SetLabel(f"Strength: {self.current_item.stat_bonuses['Strength']}")
+        self.dex_amount_txt.SetLabel(f"Dexterity: {self.current_item.stat_bonuses['Dexterity']}")
+        self.end_amount_txt.SetLabel(f"Endurance: {self.current_item.stat_bonuses['Endurance']}")
+        self.spd_amount_txt.SetLabel(f"Speed: {self.current_item.stat_bonuses['Speed']}")
+        self.tech_amount_txt.SetLabel(f"Technic: {self.current_item.stat_bonuses['Technic']}")
+        self.hit_amount_txt.SetLabel(f"Hit chance: {self.current_item.stat_bonuses['HitChance']}")
+        self.crit_amount_txt.SetLabel(f"Crit chance: {self.current_item.stat_bonuses['Crit']}")
+        self.effic_amount_txt.SetLabel(f"Efficiency: {self.current_item.stat_bonuses['DebuffEfficiency']}")
+        self.dodge_amount_txt.SetLabel(f"Efficency: {self.current_item.stat_bonuses['DodgeChance']}")
+        self.resphys_amount_txt.SetLabel(f"ResPhys: {self.current_item.stat_bonuses['ResPhys']}")
+        self.reschem_amount_txt.SetLabel(f"ResChem: {self.current_item.stat_bonuses['ResChem']}")
+        self.restherm_amount_txt.SetLabel(f"ResThern: {self.current_item.stat_bonuses['ResThermo']}")
+        self.heal_amount_txt.SetLabel(f"Heal bonus: {self.current_item.stat_bonuses['Heal']}")
+        self.power_amount_txt.SetLabel(f"Power: {self.current_item.stat_bonuses['Power']}")
+
+    def update_new_item_stats(self, e):
+        temp_mod_list = []
+        for mod in self.mod_boxes:
+            name = mod.GetValue()
+            new_mod = Crafting.CraftMod(name)
+            temp_mod_list.append(new_mod)
+
+        # temp_item_name = self.
+        temp_type = self.item_key_combobox.GetValue()
+        temp_rarity = self.item_rarity_value.GetValue()
+
+        new_item = Equipment.EquipmentCommon(temp_type, temp_rarity, name=temp_item_name, mod_list=temp_mod_list)
+        self.current_item = new_item
+        self.show_current_item_stats(e)
 
 
 
