@@ -216,7 +216,7 @@ class ItemInfo(wx.Frame):
 
         # ============================== Статы предмета ============================
 
-        stat_grid_sizer = wx.GridSizer(cols=2, hgap=30, vgap=20)
+        stat_grid_sizer = wx.GridSizer(cols=3, hgap=30, vgap=20)
 
         self.str_amount_txt = wx.StaticText(self, label="Didn't get stats")
         self.str_amount_txt.SetFont(stat_font)
@@ -262,21 +262,26 @@ class ItemInfo(wx.Frame):
         stat_grid_sizer.Add(self.power_amount_txt)
 
         stat_label = wx.StaticText(self, label="Item stats")
-        stat_label_font = wx.Font(18, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False)
-        stat_label.SetFont(stat_label_font)
+        stat_label.SetFont(label_font)
         self.stat_sizer = wx.BoxSizer(wx.VERTICAL)
         self.stat_sizer.Add(stat_label, wx.ID_ANY, wx.ALIGN_CENTER, wx.BOTTOM, 20)
         self.stat_sizer.Add(stat_grid_sizer, wx.ID_ANY, wx.EXPAND, 20)
 
         ## =============================== Управление рандомными статами ========================= ##
 
+        # Создаем чекбоксы для каждого стата на который может упасть рандомный стат предмета
         strength_check = wx.CheckBox(self, label="Strength")
         strength_check.SetFont(stat_font)
         dexterity_check = wx.CheckBox(self, label="Dexterity")
+        dexterity_check.SetFont(stat_font)
         endurance_check = wx.CheckBox(self, label="Endurance")
+        endurance_check.SetFont(stat_font)
         technic_check = wx.CheckBox(self, label="Technic")
+        technic_check.SetFont(stat_font)
         speed_check = wx.CheckBox(self, label="Speed")
+        speed_check.SetFont(stat_font)
 
+        # Засовываем чекбоксы в грид
         checkbox_sizer = wx.GridSizer(cols=3, hgap=10, vgap=10)
         checkbox_sizer.Add(strength_check)
         checkbox_sizer.Add(dexterity_check)
@@ -284,7 +289,12 @@ class ItemInfo(wx.Frame):
         checkbox_sizer.Add(technic_check)
         checkbox_sizer.Add(speed_check)
 
+        random_label = wx.StaticText(self, label="Random stat distribution")
+        random_label.SetFont(label_font)
+
+        # Добавляем все элементы блока рандомных статов в один сайзер
         rand_sizer = wx.BoxSizer(wx.VERTICAL)
+        rand_sizer.Add(random_label, wx.ID_ANY, wx.ALIGN_CENTER)
         rand_sizer.Add(checkbox_sizer, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL)
 
 
@@ -299,7 +309,7 @@ class ItemInfo(wx.Frame):
 
         ##=============================== Главный сайзер================================
         self.main_sizer = wx.BoxSizer(wx.VERTICAL)
-        self.main_sizer.Add(self.top_sizer, wx.ID_ANY, wx.ALIGN_CENTER_HORIZONTAL, wx.BOTTOM, 20)
+        self.main_sizer.Add(self.top_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
         self.main_sizer.Add(self.mod_section, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
         self.main_sizer.Add(self.stat_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
         self.main_sizer.Add(rand_sizer, wx.ID_ANY, wx.EXPAND, wx.BOTTOM, 20)
