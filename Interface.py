@@ -183,12 +183,12 @@ class ItemInfo(wx.Frame):
 
         item_key_label = wx.StaticText(top_panel, label="Item key")
         item_key_label.SetFont(sublabel_font)
-        item_key_cbox = wx.ComboBox(top_panel, value=self.current_item.key, choices=common_item_types)
+        self.item_key_cbox = wx.ComboBox(top_panel, value=self.current_item.key, choices=common_item_types)
 
         item_key_sizer.AddSpacer(7)
         item_key_sizer.Add(item_key_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_key_sizer.AddSpacer(5)
-        item_key_sizer.Add(item_key_cbox, wx.EXPAND)
+        item_key_sizer.Add(self.item_key_cbox, wx.EXPAND)
         top_sizer.Add(item_key_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
 
         # Создаем коробку с редкостью предмета
@@ -196,12 +196,12 @@ class ItemInfo(wx.Frame):
 
         item_rarity_label = wx.StaticText(top_panel, label="Item rarity")
         item_rarity_label.SetFont(sublabel_font)
-        item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=BaseStats.RARITY_LIST)
+        self.item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=BaseStats.RARITY_LIST)
 
         item_rarity_sizer.AddSpacer(7)
         item_rarity_sizer.Add(item_rarity_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_rarity_sizer.AddSpacer(5)
-        item_rarity_sizer.Add(item_rarity_cbox, wx.EXPAND)
+        item_rarity_sizer.Add(self.item_rarity_cbox, wx.EXPAND)
         top_sizer.Add(item_rarity_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
 
         top_panel.SetSizer(top_sizer)
@@ -272,6 +272,22 @@ class ItemInfo(wx.Frame):
 
         mod_panel.SetSizer(mod_sizer)
         mod_panel.Layout()
+
+        # Эвенты комбобоксов и все с ними связанное
+
+        self.mod_boxes = (first_mod_cbox, second_mod_cbox, third_mod_cbox)
+
+        some_name = item_name_ctrl.GetValue()
+        print(some_name)
+
+        first_mod_cbox.Bind(wx.EVT_COMBOBOX, lambda e,
+                                                    boxes=self.mod_boxes, name_t=some_name,
+                                                    key=self.item_key_cbox.GetValue(),
+                                                    rarity=self.item_rarity_cbox.GetValue():
+                                                    self.update_new_item_stats(e, boxes=boxes, name=name_t, key=key, rarity=rarity))
+        # second_mod_cbox.Bind(wx.EVT_COMBOBOX, self.update_new_item_stats)
+        # third_mod_cbox.Bind(wx.EVT_COMBOBOX, self.update_new_item_stats)
+
 
 
 
@@ -373,16 +389,19 @@ class ItemInfo(wx.Frame):
         self.heal_amount_txt.SetLabel(f"Heal bonus: {self.current_item.stat_bonuses['Heal']}")
         self.power_amount_txt.SetLabel(f"Power: {self.current_item.stat_bonuses['Power']}")
 
-    def update_new_item_stats(self, e):
+    def update_new_item_stats(self, e, boxes, name, key, rarity):
         temp_mod_list = []
-        for mod in self.mod_boxes:
+        for mod in boxes:
             name = mod.GetValue()
             new_mod = Crafting.CraftMod(name)
             temp_mod_list.append(new_mod)
 
-        # temp_item_name = self.
-        temp_type = self.item_key_combobox.GetValue()
-        temp_rarity = self.item_rarity_value.GetValue()
+        temp_item_name = name
+        print(name)
+        temp_type = key
+        print(key)
+        temp_rarity = rarity
+        print(rarity)
 
         new_item = Equipment.EquipmentCommon(temp_type, temp_rarity, name=temp_item_name, mod_list=temp_mod_list)
         self.current_item = new_item
