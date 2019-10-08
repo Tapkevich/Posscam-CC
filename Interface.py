@@ -140,6 +140,7 @@ class ItemInfo(wx.Frame):
 
         # Главная панель
         main_panel = wx.Panel(self)
+        main_panel.SetBackgroundColour('#484f49')
 
         ##============================= Шрифты ===============================##
 
@@ -147,22 +148,30 @@ class ItemInfo(wx.Frame):
         sublabel_font = wx.Font(12, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False)
         stat_font = wx.Font(16, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False)
 
+        # ============================= Заголовок ======================================
+        label_panel = wx.Panel(main_panel, pos=(0, 0))
+        label_panel.SetSize(500, 30)
+        label_panel.SetBackgroundColour('#46f057')
+        label_text = wx.StaticText(label_panel, label="Item information")
+        label_text.SetFont(label_font)
+        label_text.SetPosition((170, 5))
+
+
         ##================================ Верхний блок ==========================
 
-        top_panel = wx.Panel(main_panel, pos=(10, 10))
+        top_panel = wx.Panel(main_panel, pos=(10, 30))
         top_panel.SetSize(470, 70)
         top_panel.SetBackgroundColour('#1271e6')
         top_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
-
-        #Создаем коробку с именем предмета
+        # Создаем коробку с именем предмета
         item_name_sizer = wx.BoxSizer(wx.VERTICAL)
 
         item_name_label = wx.StaticText(top_panel, label="Current item name")
         item_name_label.SetFont(sublabel_font)
         item_name_ctrl = wx.TextCtrl(top_panel, value=self.current_item.name)
 
-        item_name_sizer.AddSpacer(5)
+        item_name_sizer.AddSpacer(7)
         item_name_sizer.Add(item_name_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_name_sizer.AddSpacer(5)
         item_name_sizer.Add(item_name_ctrl, wx.EXPAND)
@@ -175,7 +184,7 @@ class ItemInfo(wx.Frame):
         item_key_label.SetFont(sublabel_font)
         item_key_cbox = wx.ComboBox(top_panel, value=self.current_item.key, choices=common_item_types)
 
-        item_key_sizer.AddSpacer(5)
+        item_key_sizer.AddSpacer(7)
         item_key_sizer.Add(item_key_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_key_sizer.AddSpacer(5)
         item_key_sizer.Add(item_key_cbox, wx.EXPAND)
@@ -188,7 +197,7 @@ class ItemInfo(wx.Frame):
         item_rarity_label.SetFont(sublabel_font)
         item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=[])
 
-        item_rarity_sizer.AddSpacer(5)
+        item_rarity_sizer.AddSpacer(7)
         item_rarity_sizer.Add(item_rarity_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_rarity_sizer.AddSpacer(5)
         item_rarity_sizer.Add(item_rarity_cbox, wx.EXPAND)
