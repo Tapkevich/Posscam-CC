@@ -131,7 +131,7 @@ class ItemInfo(wx.Frame):
         self.current_item = self.find_current_item(item)
         common_item_types = Storage.ItemStorage.get_common_item_keys()
 
-        # self.Bind(wx.EVT_SHOW, self.show_current_item_stats)
+        self.Bind(wx.EVT_SHOW, self.show_current_item_stats)
 
         mod_list = []
         mod_list.append("None")
@@ -256,7 +256,7 @@ class ItemInfo(wx.Frame):
         third_mod_sizer.Add(third_mod_label, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
         third_mod_sizer.AddSpacer(5)
         third_mod_sizer.Add(third_mod_cbox, 0, wx.EXPAND)
-        # mod_intermediate_sizer.Add(third_mod_sizer, 1, flag=wx.LEFT | wx.RIGHT, border =5)
+        
 
         # Коробка для всей мод панели + ее заголовок
 
@@ -273,18 +273,20 @@ class ItemInfo(wx.Frame):
         mod_panel.SetSizer(mod_sizer)
         mod_panel.Layout()
 
+
+
         # ========================= Параметры предмета ===================================
 
         atr_panel = wx.Panel(main_panel, pos=(10, 240))
-        atr_panel.SetSize(460,200)
+        atr_panel.SetSize(460, 200)
         atr_panel.SetBackgroundColour('#9f9ca6')
 
         # Основной сайзер с лабелкой
 
         atr_main_sizer = wx.BoxSizer(wx.VERTICAL)
         atr_panel_label = wx.StaticText(atr_panel, label="Item stats")
-        atr_panel_label.SetFont(sublabel_font)
-        atr_main_sizer.Add(atr_panel_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        atr_panel_label.SetFont(label_font)
+
 
         # Строки для всех возможных параметров снаряжения
 
@@ -319,17 +321,29 @@ class ItemInfo(wx.Frame):
 
         # Грид сайзер для статов
 
-        atr_grid_sizer = wx.GridSizer(cols=2, vgap=20, hgap=20)
+        atr_grid_sizer = wx.GridSizer(cols=3, vgap=10, hgap=20)
         atr_grid_sizer.Add(self.str_amount_txt)
         atr_grid_sizer.Add(self.dex_amount_txt)
+        atr_grid_sizer.Add(self.end_amount_txt)
+        atr_grid_sizer.Add(self.spd_amount_txt)
+        atr_grid_sizer.Add(self.tech_amount_txt)
+        atr_grid_sizer.Add(self.hit_amount_txt)
+        atr_grid_sizer.Add(self.crit_amount_txt)
+        atr_grid_sizer.Add(self.effic_amount_txt)
+        atr_grid_sizer.Add(self.dodge_amount_txt)
+        atr_grid_sizer.Add(self.resphys_amount_txt)
+        atr_grid_sizer.Add(self.reschem_amount_txt)
+        atr_grid_sizer.Add(self.restherm_amount_txt)
+        atr_grid_sizer.Add(self.heal_amount_txt)
+        atr_grid_sizer.Add(self.power_amount_txt)
 
-        atr_main_sizer.Add(atr_grid_sizer)
+        # Добавляем все в основной сайзер
+
+        atr_main_sizer.Add(atr_panel_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        atr_main_sizer.AddSpacer(10)
+        atr_main_sizer.Add(atr_grid_sizer, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
         atr_panel.SetSizer(atr_main_sizer)
         atr_panel.Layout()
-
-
-
-
 
     def find_current_item(self, item):
         common_item_types = Storage.ItemStorage.get_common_item_keys()

@@ -47,15 +47,14 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Interface.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="301">
-                  <caret line="324" column="41" selection-start-line="324" selection-start-column="41" selection-end-line="324" selection-end-column="41" />
+                <state relative-caret-position="324">
+                  <caret line="258" column="8" selection-start-line="258" selection-start-column="8" selection-end-line="258" selection-end-column="8" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                     <element signature="e#157#383#0" />
                     <element signature="e#706#1219#0" />
                     <element signature="e#1252#1381#0" />
                     <element signature="e#1419#1546#0" />
-                    <marker date="1570544398359" expanded="true" signature="7227:7271" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -68,8 +67,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Interface.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="537">
-                  <caret line="242" selection-start-line="242" selection-end-line="242" />
+                <state relative-caret-position="554">
+                  <caret line="243" selection-start-line="243" selection-end-line="243" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                     <element signature="e#157#383#0" />
@@ -595,15 +594,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="324" column="41" selection-start-line="324" selection-start-column="41" selection-end-line="324" selection-end-column="41" />
+        <state relative-caret-position="324">
+          <caret line="258" column="8" selection-start-line="258" selection-start-column="8" selection-end-line="258" selection-end-column="8" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#157#383#0" />
             <element signature="e#706#1219#0" />
             <element signature="e#1252#1381#0" />
             <element signature="e#1419#1546#0" />
-            <marker date="1570544398359" expanded="true" signature="7227:7271" ph="..." />
           </folding>
         </state>
       </provider>
