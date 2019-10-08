@@ -154,6 +154,7 @@ class ItemInfo(wx.Frame):
         label_panel.SetBackgroundColour('#46f057')
         label_text = wx.StaticText(label_panel, label="Item information")
         label_text.SetFont(label_font)
+        label_text.SetForegroundColour('#6b756c')
         label_text.SetPosition((170, 5))
 
 
@@ -195,7 +196,7 @@ class ItemInfo(wx.Frame):
 
         item_rarity_label = wx.StaticText(top_panel, label="Item rarity")
         item_rarity_label.SetFont(sublabel_font)
-        item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=[])
+        item_rarity_cbox = wx.ComboBox(top_panel, value=self.current_item.rarity.key, choices=BaseStats.RARITY_LIST)
 
         item_rarity_sizer.AddSpacer(7)
         item_rarity_sizer.Add(item_rarity_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
@@ -203,11 +204,32 @@ class ItemInfo(wx.Frame):
         item_rarity_sizer.Add(item_rarity_cbox, wx.EXPAND)
         top_sizer.Add(item_rarity_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
 
-
         top_panel.SetSizer(top_sizer)
         top_panel.Layout()
 
+        # =============================== Настройка модов ==================================
 
+        mod_panel = wx.Panel(main_panel, pos=(10, 100))
+        mod_panel.SetSize(470, 70)
+        mod_panel.SetBackgroundColour('#6b756c')
+        mod_sizer = wx.BoxSizer(wx.VERTICAL)
+        mod_intermediate_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        # Коробка с первым модом
+        first_mod_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        first_mod_label = wx.StaticText(mod_panel, label="First mod")
+        first_mod_label.SetFont(sublabel_font)
+        first_mod_cbox = wx.ComboBox(mod_panel, value=self.current_item.mod_list[0], choices=Storage.item_storage.mod_dict.keys)
+
+        first_mod_sizer.AddSpacer(7)
+        first_mod_sizer.Add(first_mod_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        first_mod_sizer.AddSpacer(5)
+        first_mod_sizer.Add(first_mod_cbox, wx.EXPAND)
+        mod_intermediate_sizer.Add(first_mod_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
+
+        mod_sizer.Add(mod_intermediate_sizer)
+        mod_sizer.Layout()
 
 
 
