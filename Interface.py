@@ -161,7 +161,7 @@ class ItemInfo(wx.Frame):
         ##================================ Верхний блок ==========================
 
         top_panel = wx.Panel(main_panel, pos=(10, 30))
-        top_panel.SetSize(470, 70)
+        top_panel.SetSize(460, 70)
         top_panel.SetBackgroundColour('#1271e6')
         top_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -210,7 +210,7 @@ class ItemInfo(wx.Frame):
         # =============================== Настройка модов ==================================
 
         mod_panel = wx.Panel(main_panel, pos=(10, 100))
-        mod_panel.SetSize(470, 70)
+        mod_panel.SetSize(460, 140)
         mod_panel.SetBackgroundColour('#6b756c')
         mod_sizer = wx.BoxSizer(wx.VERTICAL)
         mod_intermediate_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -220,16 +220,60 @@ class ItemInfo(wx.Frame):
 
         first_mod_label = wx.StaticText(mod_panel, label="First mod")
         first_mod_label.SetFont(sublabel_font)
-        first_mod_cbox = wx.ComboBox(mod_panel, value=self.current_item.mod_list[0], choices=Storage.item_storage.mod_dict.keys)
+        first_mod_cbox = wx.ComboBox(mod_panel, value=self.current_item.mod_list[0].key, choices=mod_list)
 
-        first_mod_sizer.AddSpacer(7)
-        first_mod_sizer.Add(first_mod_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        # first_mod_sizer.AddSpacer(7)
+        first_mod_sizer.Add(first_mod_label, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
         first_mod_sizer.AddSpacer(5)
-        first_mod_sizer.Add(first_mod_cbox, wx.EXPAND)
-        mod_intermediate_sizer.Add(first_mod_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
+        first_mod_sizer.Add(first_mod_cbox, flag=wx.EXPAND)
+        mod_intermediate_sizer.Add(first_mod_sizer, 1, wx.LEFT | wx.RIGHT, border=5)
 
-        mod_sizer.Add(mod_intermediate_sizer)
-        mod_sizer.Layout()
+        # Коробка со вторым модом
+        second_mod_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        second_mod_label = wx.StaticText(mod_panel, label='Second mod')
+        second_mod_label.SetFont(sublabel_font)
+        second_mod_cbox = wx.ComboBox(mod_panel, value=self.current_item.mod_list[1].key,
+                                      choices=mod_list)
+
+        # second_mod_sizer.AddSpacer(7)
+        second_mod_sizer.Add(second_mod_label, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
+        second_mod_sizer.AddSpacer(5)
+        second_mod_sizer.Add(second_mod_cbox, 0)
+        mod_intermediate_sizer.Add(second_mod_sizer, 1, flag=wx.LEFT | wx.RIGHT, border=5)
+
+        # Коробка с третьим модом
+
+        third_mod_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        third_mod_label = wx.StaticText(mod_panel, label="Third mod")
+        third_mod_label.SetFont(sublabel_font)
+        third_mod_cbox = wx.ComboBox(mod_panel, value=self.current_item.mod_list[2].key,
+                                     choices=mod_list)
+        third_mod_cbox.SetFont(sublabel_font)
+
+        # third_mod_sizer.AddSpacer(7)
+        third_mod_sizer.Add(third_mod_label, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
+        third_mod_sizer.AddSpacer(5)
+        third_mod_sizer.Add(third_mod_cbox, 0, wx.EXPAND)
+        # mod_intermediate_sizer.Add(third_mod_sizer, 1, flag=wx.LEFT | wx.RIGHT, border =5)
+
+        # Коробка для всей мод панели + ее заголовок
+
+        mod_panel_label = wx.StaticText(mod_panel, label="Mods")
+        mod_panel_label.SetFont(label_font)
+
+        mod_sizer.AddSpacer(5)
+        mod_sizer.Add(mod_panel_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        # mod_sizer.AddSpacer(5)
+        mod_sizer.Add(mod_intermediate_sizer, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
+        mod_sizer.AddSpacer(5)
+        mod_sizer.Add(third_mod_sizer, 0, flag=wx.ALIGN_CENTER_HORIZONTAL)
+
+        mod_panel.SetSizer(mod_sizer)
+        mod_panel.Layout()
+
+
 
 
 
