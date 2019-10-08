@@ -47,15 +47,15 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Interface.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="412">
-                  <caret line="211" column="53" selection-start-line="211" selection-start-column="53" selection-end-line="211" selection-end-column="53" />
+                <state relative-caret-position="301">
+                  <caret line="324" column="41" selection-start-line="324" selection-start-column="41" selection-end-line="324" selection-end-column="41" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                     <element signature="e#157#383#0" />
                     <element signature="e#706#1219#0" />
                     <element signature="e#1252#1381#0" />
                     <element signature="e#1419#1546#0" />
-                    <marker date="1570543158398" expanded="true" signature="7227:7271" ph="..." />
+                    <marker date="1570544398359" expanded="true" signature="7227:7271" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -508,13 +508,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-258859485/wx/_core/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="1126" selection-start-line="1126" selection-end-line="1126" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -593,17 +586,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-258859485/wx/_core/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="1070" column="21" lean-forward="true" selection-start-line="1070" selection-start-column="21" selection-end-line="1070" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="211" column="53" selection-start-line="211" selection-start-column="53" selection-end-line="211" selection-end-column="53" />
+        <state relative-caret-position="301">
+          <caret line="324" column="41" selection-start-line="324" selection-start-column="41" selection-end-line="324" selection-end-column="41" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#157#383#0" />
             <element signature="e#706#1219#0" />
             <element signature="e#1252#1381#0" />
             <element signature="e#1419#1546#0" />
-            <marker date="1570543158398" expanded="true" signature="7227:7271" ph="..." />
+            <marker date="1570544398359" expanded="true" signature="7227:7271" ph="..." />
           </folding>
         </state>
       </provider>

@@ -273,6 +273,60 @@ class ItemInfo(wx.Frame):
         mod_panel.SetSizer(mod_sizer)
         mod_panel.Layout()
 
+        # ========================= Параметры предмета ===================================
+
+        atr_panel = wx.Panel(main_panel, pos=(10, 240))
+        atr_panel.SetSize(460,200)
+        atr_panel.SetBackgroundColour('#9f9ca6')
+
+        # Основной сайзер с лабелкой
+
+        atr_main_sizer = wx.BoxSizer(wx.VERTICAL)
+        atr_panel_label = wx.StaticText(atr_panel, label="Item stats")
+        atr_panel_label.SetFont(sublabel_font)
+        atr_main_sizer.Add(atr_panel_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
+
+        # Строки для всех возможных параметров снаряжения
+
+        self.str_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.str_amount_txt.SetFont(stat_font)
+        self.dex_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.dex_amount_txt.SetFont(stat_font)
+        self.end_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.end_amount_txt.SetFont(stat_font)
+        self.spd_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.spd_amount_txt.SetFont(stat_font)
+        self.tech_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.tech_amount_txt.SetFont(stat_font)
+        self.hit_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.hit_amount_txt.SetFont(stat_font)
+        self.crit_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.crit_amount_txt.SetFont(stat_font)
+        self.effic_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.effic_amount_txt.SetFont(stat_font)
+        self.dodge_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.dodge_amount_txt.SetFont(stat_font)
+        self.resphys_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.resphys_amount_txt.SetFont(stat_font)
+        self.reschem_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.reschem_amount_txt.SetFont(stat_font)
+        self.restherm_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.restherm_amount_txt.SetFont(stat_font)
+        self.heal_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.heal_amount_txt.SetFont(stat_font)
+        self.power_amount_txt = wx.StaticText(atr_panel, label="Didn't get stat")
+        self.power_amount_txt.SetFont(stat_font)
+
+        # Грид сайзер для статов
+
+        atr_grid_sizer = wx.GridSizer(cols=2, vgap=20, hgap=20)
+        atr_grid_sizer.Add(self.str_amount_txt)
+        atr_grid_sizer.Add(self.dex_amount_txt)
+
+        atr_main_sizer.Add(atr_grid_sizer)
+        atr_panel.SetSizer(atr_main_sizer)
+        atr_panel.Layout()
+
 
 
 
