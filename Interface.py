@@ -170,12 +170,12 @@ class ItemInfo(wx.Frame):
 
         item_name_label = wx.StaticText(top_panel, label="Current item name")
         item_name_label.SetFont(sublabel_font)
-        item_name_ctrl = wx.TextCtrl(top_panel, value=self.current_item.name)
+        self.item_name_ctrl = wx.TextCtrl(top_panel, value=self.current_item.name)
 
         item_name_sizer.AddSpacer(7)
         item_name_sizer.Add(item_name_label, 0, wx.ALIGN_CENTER_HORIZONTAL)
         item_name_sizer.AddSpacer(5)
-        item_name_sizer.Add(item_name_ctrl, wx.EXPAND)
+        item_name_sizer.Add(self.item_name_ctrl, wx.EXPAND)
         top_sizer.Add(item_name_sizer, 0, wx.LEFT | wx.RIGHT, border=5)
 
         # Создаем коробку с типом предмета
@@ -206,6 +206,9 @@ class ItemInfo(wx.Frame):
 
         top_panel.SetSizer(top_sizer)
         top_panel.Layout()
+
+
+
 
         # =============================== Настройка модов ==================================
 
@@ -272,21 +275,6 @@ class ItemInfo(wx.Frame):
 
         mod_panel.SetSizer(mod_sizer)
         mod_panel.Layout()
-
-        # Эвенты комбобоксов и все с ними связанное
-
-        self.mod_boxes = (first_mod_cbox, second_mod_cbox, third_mod_cbox)
-
-        some_name = item_name_ctrl.GetValue()
-        print(some_name)
-
-        first_mod_cbox.Bind(wx.EVT_COMBOBOX, lambda e,
-                                                    boxes=self.mod_boxes, name_t=some_name,
-                                                    key=self.item_key_cbox.GetValue(),
-                                                    rarity=self.item_rarity_cbox.GetValue():
-                                                    self.update_new_item_stats(e, boxes=boxes, name=name_t, key=key, rarity=rarity))
-        # second_mod_cbox.Bind(wx.EVT_COMBOBOX, self.update_new_item_stats)
-        # third_mod_cbox.Bind(wx.EVT_COMBOBOX, self.update_new_item_stats)
 
 
 
@@ -361,6 +349,24 @@ class ItemInfo(wx.Frame):
         atr_panel.SetSizer(atr_main_sizer)
         atr_panel.Layout()
 
+        #==================================== Эвенты ============================================
+
+        # Эвенты вкладки с модами
+        mod_boxes = (first_mod_cbox, second_mod_cbox, third_mod_cbox)
+        first_mod_cbox.Bind(wx.EVT_COMBOBOX, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+        second_mod_cbox.Bind(wx.EVT_COMBOBOX, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+        third_mod_cbox.Bind(wx.EVT_COMBOBOX, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+        # Эвенты топ области
+        self.item_name_ctrl.Bind(wx.EVT_TEXT, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+        self.item_key_cbox.Bind(wx.EVT_COMBOBOX, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+        self.item_rarity_cbox.Bind(wx.EVT_COMBOBOX, lambda e, boxes=mod_boxes:
+                                                    self.update_new_item_stats(e, boxes=boxes))
+
     def find_current_item(self, item):
         common_item_types = Storage.ItemStorage.get_common_item_keys()
         temp_modlist = [Crafting.CraftMod("None"), Crafting.CraftMod("None"), Crafting.CraftMod("None")]
@@ -389,19 +395,17 @@ class ItemInfo(wx.Frame):
         self.heal_amount_txt.SetLabel(f"Heal bonus: {self.current_item.stat_bonuses['Heal']}")
         self.power_amount_txt.SetLabel(f"Power: {self.current_item.stat_bonuses['Power']}")
 
-    def update_new_item_stats(self, e, boxes, name, key, rarity):
+    def update_new_item_stats(self, e, boxes):
         temp_mod_list = []
         for mod in boxes:
-            name = mod.GetValue()
-            new_mod = Crafting.CraftMod(name)
+            mod_key = mod.GetValue()
+            new_mod = Crafting.CraftMod(mod_key)
             temp_mod_list.append(new_mod)
 
-        temp_item_name = name
-        print(name)
-        temp_type = key
-        print(key)
-        temp_rarity = rarity
-        print(rarity)
+
+        temp_item_name = self.item_name_ctrl.GetValue()
+        temp_type = self.item_key_cbox.GetValue()
+        temp_rarity = self.item_rarity_cbox.GetValue()
 
         new_item = Equipment.EquipmentCommon(temp_type, temp_rarity, name=temp_item_name, mod_list=temp_mod_list)
         self.current_item = new_item
